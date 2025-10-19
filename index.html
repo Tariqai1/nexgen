@@ -1,148 +1,270 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="description" content="NexGen Systems specializes in concrete cutting, drilling, grouting, and construction solutions in Mumbai." />
   <title>NexGen Systems</title>
 
-  <!-- ✅ TailwindCSS (Latest CDN) -->
+  <link rel="icon" type="image/x-icon" href="/favicon.png">
+
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet">
+
   <script src="https://cdn.tailwindcss.com/3.4.14"></script>
+  
+  <link rel="stylesheet" href="style.css">
 
-  <!-- ✅ AOS Animation CSS -->
-  <link href="https://unpkg.com/aos@2.3.4/dist/aos.css" rel="stylesheet">
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            'primary-blue': '#00204a',
+            'secondary-teal': '#00c38c',
+            'dark-navy': '#001a35',
+            'soft-gray': '#f4f7f9',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+          },
+        },
+      }
+    }
+  </script>
 
-  <!-- ✅ GSAP Animation -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.2/gsap.min.js" integrity="sha512-FJzIuGv0kphnZ1l8qf2RpN+O7bSWg0eVJzOz5n9s0R4hX5SAAz2JtGZxkRZQm1v3R7tEKL6zldplDqvHx0SyvQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-
-  <style>
-    body {
-      font-family: 'Poppins', sans-serif;
-      scroll-behavior: smooth;
-    }
-    .gradient-bg {
-      background: linear-gradient(135deg, #00204a 0%, #00c38c 100%);
-    }
-    .service-card {
-      transition: all 0.4s ease;
-    }
-    .service-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 8px 20px rgba(0,0,0,0.2);
-    }
-  </style>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 </head>
 
+<body class="bg-soft-gray text-gray-800">
 
-<body class="bg-gray-50 text-gray-800">
+  <header class="fixed w-full z-50 bg-white shadow-lg/20">
+    <nav class="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
+      <a href="#home" class="flex items-center gap-2">
+        <img src="gexgenlogo.jpeg" alt="NexGen Logo" class="rounded-lg w-10 h-10 shadow-md">
+        <h1 class="text-2xl font-extrabold text-primary-blue">NEX<span class="text-secondary-teal">GEN</span></h1>
+      </a>
 
-  <!-- Navbar -->
-  <header class="fixed w-full z-50 bg-white shadow-md">
-    <nav class="max-w-7xl mx-auto px-6 py-3 flex justify-between items-center">
-      <div class="flex items-center gap-2">
-        <img src="gexgenlogo.jpeg" alt="NexGen Logo" class="w-10 h-10">
-        <h1 class="text-2xl font-bold text-[#00204a]">NEX<span class="text-[#00c38c]">GEN</span></h1>
-      </div>
-      <ul class="hidden md:flex gap-8 font-medium">
-        <li><a href="#home" class="hover:text-[#00c38c]">Home</a></li>
-        <li><a href="#about" class="hover:text-[#00c38c]">About</a></li>
-        <li><a href="#services" class="hover:text-[#00c38c]">Services</a></li>
-        <li><a href="#contact" class="hover:text-[#00c38c]">Contact</a></li>
+      <ul class="hidden md:flex gap-10 font-medium text-gray-700">
+        <li><a href="#home" class="hover:text-secondary-teal transition duration-300">Home</a></li>
+        <li><a href="#about" class="hover:text-secondary-teal transition duration-300">About</a></li>
+        <li><a href="#stats" class="hover:text-secondary-teal transition duration-300">Impact</a></li>
+        <li><a href="#services" class="hover:text-secondary-teal transition duration-300">Services</a></li>
+        <li><a href="#contact" class="hover:text-secondary-teal transition duration-300">Contact</a></li>
       </ul>
+
+      <button id="menu-button" class="md:hidden p-2 text-primary-blue hover:text-secondary-teal transition">
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-menu"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
+      </button>
     </nav>
   </header>
 
-  <!-- Hero Section -->
-  <section id="home" class="gradient-bg text-white h-screen flex flex-col justify-center items-center text-center px-4">
-    <h1 class="text-5xl font-bold mb-4" data-aos="fade-up">NexGen Systems</h1>
-    <p class="text-lg max-w-2xl" data-aos="fade-up" data-aos-delay="200">
-      Expert solutions in concrete cutting, drilling, and construction — with precision, efficiency, and reliability.
-    </p>
-    <a href="#contact" class="mt-6 px-6 py-3 bg-white text-[#00204a] font-semibold rounded-full hover:bg-[#00c38c] hover:text-white transition">
-      Get in Touch
-    </a>
-  </section>
+  <div id="mobile-menu" class="fixed top-0 left-0 w-full h-full bg-dark-navy/95 z-40 transform -translate-x-full md:hidden flex flex-col justify-center items-center">
+    <button id="close-menu" class="absolute top-6 right-6 text-white p-2">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-x"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+    </button>
+    <ul class="text-white text-3xl space-y-8 font-semibold text-center">
+      <li><a href="#home" class="menu-link hover:text-secondary-teal transition duration-300">Home</a></li>
+      <li><a href="#about" class="menu-link hover:text-secondary-teal transition duration-300">About</a></li>
+      <li><a href="#stats" class="menu-link hover:text-secondary-teal transition duration-300">Impact</a></li>
+      <li><a href="#services" class="menu-link hover:text-secondary-teal transition duration-300">Services</a></li>
+      <li><a href="#contact" class="menu-link hover:text-secondary-teal transition duration-300">Contact</a></li>
+    </ul>
+  </div>
 
-  <!-- About Section -->
-  <section id="about" class="py-20 bg-white">
-    <div class="max-w-6xl mx-auto px-6 text-center">
-      <h2 class="text-4xl font-bold text-[#00204a] mb-6" data-aos="fade-up">About Us</h2>
-      <p class="text-lg leading-relaxed text-gray-700" data-aos="fade-up" data-aos-delay="150">
-        At NexGen Systems, we bring advanced techniques and equipment to deliver precise and efficient results in concrete cutting, drilling, and structural works. Our professional team ensures safety, accuracy, and on-time project completion for every client.
-      </p>
-    </div>
-  </section>
+  <section id="home" class="gradient-bg text-white pt-24 pb-16 min-h-[90vh] flex items-center">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center">
+      <div class="space-y-6 md:py-20 text-center md:text-left">
+        <p id="hero-kicker" class="text-xl font-medium tracking-wider uppercase text-secondary-teal">Precision Concrete Solutions</p>
+        <h1 id="hero-title" class="text-5xl sm:text-6xl font-extrabold leading-tight">
+          Building the Future with <span class="text-white/90">Reliability</span> and <span class="text-secondary-teal/90">Precision</span>.
+        </h1>
+        <p id="hero-tagline" class="text-lg opacity-90 max-w-xl md:max-w-none mx-auto">
+          We deliver expert concrete cutting, drilling, and structural works solutions across Mumbai, utilizing advanced technology for efficiency and accuracy.
+        </p>
+        <a href="#contact" id="hero-cta" class="inline-block mt-8 px-8 py-3 bg-white text-primary-blue font-semibold rounded-full shadow-2xl hover:bg-secondary-teal hover:text-white transition transform hover:scale-105 duration-300">
+          Get a Free Quote
+        </a>
+      </div>
 
-  <!-- Services Section -->
-  <section id="services" class="py-20 bg-gray-100">
-    <div class="max-w-6xl mx-auto px-6 text-center">
-      <h2 class="text-4xl font-bold text-[#00204a] mb-12" data-aos="fade-up">Our Services</h2>
-      <div class="grid md:grid-cols-3 gap-8">
-        <!-- Card 1 -->
-        <div class="service-card bg-white p-6 rounded-2xl shadow-sm" data-aos="zoom-in">
-          <h3 class="text-xl font-semibold text-[#00c38c] mb-3">Wire Saw Cutting</h3>
-          <p>High-precision concrete cutting for large structures with minimal vibration.</p>
-        </div>
-        <div class="service-card bg-white p-6 rounded-2xl shadow-sm" data-aos="zoom-in" data-aos-delay="100">
-          <h3 class="text-xl font-semibold text-[#00c38c] mb-3">Wall Saw Cutting</h3>
-          <p>Accurate wall cutting using advanced diamond saw technology.</p>
-        </div>
-        <div class="service-card bg-white p-6 rounded-2xl shadow-sm" data-aos="zoom-in" data-aos-delay="200">
-          <h3 class="text-xl font-semibold text-[#00c38c] mb-3">Core Cutting</h3>
-          <p>Efficient drilling in RCC for plumbing, electrical, and mechanical installations.</p>
-        </div>
-        <div class="service-card bg-white p-6 rounded-2xl shadow-sm" data-aos="zoom-in" data-aos-delay="300">
-          <h3 class="text-xl font-semibold text-[#00c38c] mb-3">Rebar Grouting</h3>
-          <p>Rebar chemical anchoring for reinforcement and structural integrity.</p>
-        </div>
-        <div class="service-card bg-white p-6 rounded-2xl shadow-sm" data-aos="zoom-in" data-aos-delay="400">
-          <h3 class="text-xl font-semibold text-[#00c38c] mb-3">Concrete Breaking</h3>
-          <p>Safe and efficient breaking of concrete for renovation and redevelopment projects.</p>
-        </div>
-        <div class="service-card bg-white p-6 rounded-2xl shadow-sm" data-aos="zoom-in" data-aos-delay="500">
-          <h3 class="text-xl font-semibold text-[#00c38c] mb-3">Manpower Supply</h3>
-          <p>Trained professionals for specialized concrete and construction projects.</p>
+      <div class="hidden md:flex justify-center items-center">
+        <div class="w-full max-w-md h-96 bg-dark-navy/50 rounded-3xl shadow-2xl flex flex-col justify-center items-center p-8 border-4 border-secondary-teal/50">
+          <svg xmlns="http://www.w3.org/2000/svg" width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-construction-2 text-secondary-teal/80 mb-4"><path d="M22 11h-3.37a2 2 0 0 0-1.22.42l-1.6 1.6a2 2 0 0 1-1.22.42H9.86a2 2 0 0 0-1.22-.42l-1.6-1.6A2 2 0 0 1 5.8 11H2"/><path d="m17 17-2.9-2.9c-.8-.8-.8-2 0-2.8l2.8-2.8c.8-.8 2-.8 2.8 0l2.9 2.9c.8.8.8 2 0 2.8l-2.8 2.8c-.8.8-2 .8-2.8 0z"/><path d="M8 7v6"/></svg>
+          <p class="text-xl font-bold text-white/90">Structural Integrity Visualization</p>
+          <p class="text-sm text-white/60 mt-2 text-center">Modern Techniques for Safe Execution</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Contact Section -->
-  <section id="contact" class="py-20 bg-white">
+  <section id="about" class="py-20 bg-white shadow-inner">
     <div class="max-w-6xl mx-auto px-6 text-center">
-      <h2 class="text-4xl font-bold text-[#00204a] mb-6" data-aos="fade-up">Contact Us</h2>
-      <p class="text-gray-600 mb-10" data-aos="fade-up" data-aos-delay="100">
-        Have a project in mind? Let's make it happen.
+      <h2 class="text-4xl font-bold text-primary-blue mb-4">About NexGen Systems</h2>
+      <div class="h-1 w-20 bg-secondary-teal mx-auto mb-12 rounded-full"></div>
+      <p class="text-xl leading-relaxed text-gray-700 max-w-4xl mx-auto rounded-xl bg-soft-gray p-6 border border-gray-100" data-aos-id="about-text">
+        At NexGen Systems, we bring advanced techniques and state-of-the-art equipment to deliver precise and efficient results in concrete cutting, drilling, and structural works. Our professional team ensures safety, accuracy, and on-time project completion for every client, making us the trusted partner for complex projects in the Mumbai metropolitan area.
       </p>
-
-      <div class="grid md:grid-cols-2 gap-8 text-left">
-        <div data-aos="fade-right">
-          <h3 class="text-2xl font-semibold text-[#00c38c] mb-3">Get in Touch</h3>
-          <p><strong>📞</strong> +91 89769 61138</p>
-          <p><strong>📧</strong> info@nexgensystems.in</p>
-          <p><strong>📍</strong> Unit No. 10, Ground Floor, Wajid Ali Compound,<br>Behind Dilshad Hotel, 90 Ft Road, Sakinaka, Mumbai - 400072</p>
+    </div>
+  </section>
+  
+  <section id="stats" class="py-20 bg-dark-navy text-white">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+      <h2 class="text-3xl font-bold mb-10">Our Track Record Speaks for Itself</h2>
+      <div class="grid grid-cols-2 md:grid-cols-4 gap-8">
+        <div class="stat-item p-4 rounded-xl">
+          <p class="text-5xl font-extrabold text-secondary-teal" id="stat1-value">0</p>
+          <p class="mt-2 text-lg font-medium opacity-80">Projects Completed</p>
         </div>
-
-        <iframe data-aos="fade-left"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3770.977875030669!2d72.88743247494477!3d19.075983052489074!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c90dc773b39b%3A0xf4d31eb39dfc5027!2sSaki%20Naka%2C%20Mumbai!5e0!3m2!1sen!2sin!4v1713961794321!5m2!1sen!2sin"
-          width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy">
-        </iframe>
+        <div class="stat-item p-4 rounded-xl">
+          <p class="text-5xl font-extrabold text-secondary-teal" id="stat2-value">0</p>
+          <p class="mt-2 text-lg font-medium opacity-80">Years of Expertise</p>
+        </div>
+        <div class="stat-item p-4 rounded-xl">
+          <p class="text-5xl font-extrabold text-secondary-teal" id="stat3-value">0</p>
+          <p class="mt-2 text-lg font-medium opacity-80">Tonnes of Concrete Cut</p>
+        </div>
+        <div class="stat-item p-4 rounded-xl">
+          <p class="text-5xl font-extrabold text-secondary-teal" id="stat4-value">0</p>
+          <p class="mt-2 text-lg font-medium opacity-80">Satisfied Clients</p>
+        </div>
       </div>
     </div>
   </section>
 
-  <!-- Footer -->
-  <footer class="bg-[#00204a] text-white py-6 text-center">
-    <p>&copy; 2025 NexGen Systems | Designed by mtansari</p>
+  <section id="services" class="py-20 bg-soft-gray">
+    <div class="max-w-6xl mx-auto px-6 text-center">
+      <h2 class="text-4xl font-bold text-primary-blue mb-4">Our Core Services</h2>
+      <div class="h-1 w-20 bg-secondary-teal mx-auto mb-12 rounded-full"></div>
+
+      <div class="grid md:grid-cols-3 gap-8" id="services-grid">
+        <div class="service-card bg-white p-8 rounded-2xl shadow-xl border-b-4 border-transparent">
+          <div class="text-secondary-teal mb-4 mx-auto w-12 h-12">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-scissors"><circle cx="7" cy="7" r="3"/><path d="M10 7h10"/><circle cx="7" cy="17" r="3"/><path d="M9.4 14.6 20 7"/></svg>
+          </div>
+          <h3 class="text-xl font-bold text-primary-blue mb-3">Wire Saw Cutting</h3>
+          <p class="text-gray-600">High-precision concrete cutting for large, thick structures with minimal vibration and low noise output.</p>
+        </div>
+
+        <div class="service-card bg-white p-8 rounded-2xl shadow-xl border-b-4 border-transparent">
+          <div class="text-secondary-teal mb-4 mx-auto w-12 h-12">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-wall"><path d="M4 11h16"/><path d="M4 7h16"/><path d="M4 15h16"/><path d="M4 19h16"/></svg>
+          </div>
+          <h3 class="text-xl font-bold text-primary-blue mb-3">Wall Saw Cutting</h3>
+          <p class="text-gray-600">Accurate, track-mounted cutting for creating perfect door, window, or ventilation openings in walls.</p>
+        </div>
+
+        <div class="service-card bg-white p-8 rounded-2xl shadow-xl border-b-4 border-transparent">
+          <div class="text-secondary-teal mb-4 mx-auto w-12 h-12">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-drill"><path d="m3 7 14.4 14.4a2 2 0 0 0 2.4-.4L22 19c.7-.7.7-1.7 0-2.4l-1.6-1.6a2 2 0 0 0-.4-2.4L7 3"/><path d="m14 10 3-3"/></svg>
+          </div>
+          <h3 class="text-xl font-bold text-primary-blue mb-3">Core Drilling</h3>
+          <p class="text-gray-600">Precise circular drilling through reinforced concrete for utility services: plumbing, electrical, and HVAC.</p>
+        </div>
+
+        <div class="service-card bg-white p-8 rounded-2xl shadow-xl border-b-4 border-transparent">
+          <div class="text-secondary-teal mb-4 mx-auto w-12 h-12">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-anchor"><path d="M12 22V2"/><path d="M5 10v7H19v-7"/><path d="M12 2a4 4 0 0 0-4 4v4h8V6a4 4 0 0 0-4-4z"/></svg>
+          </div>
+          <h3 class="text-xl font-bold text-primary-blue mb-3">Rebar Grouting</h3>
+          <p class="text-gray-600">Chemical anchoring and grouting for superior reinforcement, ensuring structural longevity and strength.</p>
+        </div>
+
+        <div class="service-card bg-white p-8 rounded-2xl shadow-xl border-b-4 border-transparent">
+          <div class="text-secondary-teal mb-4 mx-auto w-12 h-12">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-hammer"><path d="m15 12-8.5 8.5c-.7.7-1.5.7-2.2 0-.7-.7-.7-1.5 0-2.2L12 9"/><path d="m18 15 3.5 3.5c.3.3.3.8 0 1.1-.3.3-.8.3-1.1 0L15 16"/><path d="m19 12-5.2-5.2c-.4-.4-1-.6-1.6-.6H7.8c-.8 0-1.6.3-2.3.9L3 7.8"/><path d="m19 12a2 2 0 0 0 2-2 2 2 0 0 0-2-2"/></svg>
+          </div>
+          <h3 class="text-xl font-bold text-primary-blue mb-3">Controlled Breaking</h3>
+          <p class="text-gray-600">Safe, strategic, and efficient breaking/demolition of concrete for renovation and redevelopment projects.</p>
+        </div>
+
+        <div class="service-card bg-white p-8 rounded-2xl shadow-xl border-b-4 border-transparent">
+          <div class="text-secondary-teal mb-4 mx-auto w-12 h-12">
+            <svg xmlns="http://www.w3.org/2000/svg" width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-users"><path d="M16 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/><path d="M22 17v-2a4 4 0 0 0-4-4h-2"/><path d="M10 17h4"/></svg>
+          </div>
+          <h3 class="text-xl font-bold text-primary-blue mb-3">Skilled Manpower</h3>
+          <p class="text-gray-600">Trained, professional personnel supply for specialized concrete and construction project execution.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="py-20 bg-white shadow-inner">
+    <div class="max-w-6xl mx-auto px-6">
+      <h2 class="text-4xl font-bold text-primary-blue mb-4 text-center">Get In Touch</h2>
+      <div class="h-1 w-20 bg-secondary-teal mx-auto mb-12 rounded-full"></div>
+
+      <div class="grid md:grid-cols-2 gap-12 text-left">
+        <div class="p-8 bg-soft-gray rounded-2xl shadow-lg border border-gray-100">
+            <h3 class="text-2xl font-bold text-primary-blue mb-6">Send Us a Message</h3>
+            <form action="mailto:itsoft404@gmail.com" method="GET" enctype="text/plain" class="space-y-4">
+              <input type="text" name="Name" placeholder="Your Name" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-secondary-teal focus:border-secondary-teal transition" required>
+              <input type="email" name="Email" placeholder="Your Email" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-secondary-teal focus:border-secondary-teal transition" required>
+              <input type="tel" name="Phone" placeholder="Phone Number (Optional)" class="w-full p-3 border border-gray-300 rounded-lg focus:ring-secondary-teal focus:border-secondary-teal transition">
+              <textarea rows="4" name="Message" placeholder="Tell us about your project..." class="w-full p-3 border border-gray-300 rounded-lg focus:ring-secondary-teal focus:border-secondary-teal transition" required></textarea>
+              <button type="submit" class="w-full py-3 bg-secondary-teal text-white font-semibold rounded-lg shadow-md hover:bg-secondary-teal/90 transition transform hover:scale-[1.01]">
+                  Submit Enquiry
+              </button>
+            </form>
+        </div>
+
+        <div class="space-y-6">
+          <h3 class="text-2xl font-bold text-secondary-teal mb-5">Our Details & Location</h3>
+          
+          <div class="flex items-start gap-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="text-primary-blue w-6 h-6 flex-shrink-0 mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 16.92v3a2 2 0 0 1-2 2c-3.6-1.5-6-4-7.5-7.5C12 10.9 14.5 8.5 16.92 5a2 2 0 0 1 2-2 1 1 0 0 0 0 2c-2.8 2.8-5.7 5.7-7.5 7.5-.9.9-1.8 1.8-2.6 2.6z"/></svg>
+            <div>
+              <p class="font-medium text-lg">Call Us</p>
+              <a href="tel:+918976961138" class="text-primary-blue hover:underline font-semibold">+91 89769 61138</a>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="text-primary-blue w-6 h-6 flex-shrink-0 mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="20" height="16" x="2" y="4" rx="2"/><path d="m22 7-8.97 5.7a1.83 1.83 0 0 1-2.06 0L2 7"/></svg>
+            <div>
+              <p class="font-medium text-lg">Email Us</p>
+              <a href="mailto:itsoft404@gmail.com" class="text-primary-blue hover:underline font-semibold">itsoft404@gmail.com</a>
+            </div>
+          </div>
+
+          <div class="pt-4 border-t border-gray-100">
+            <h4 class="text-xl font-bold text-primary-blue mb-4">Connect Instantly</h4>
+            <div class="flex space-x-6">
+                <a href="https://wa.me/918976961138" target="_blank" class="text-white bg-green-500 p-3 rounded-full shadow-lg hover:bg-green-600 transition transform hover:scale-110" aria-label="Chat on WhatsApp">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-message-square"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+                </a>
+                <a href="https://instagram.com/nexgensystems_india" target="_blank" class="text-white bg-pink-600 p-3 rounded-full shadow-lg hover:bg-pink-700 transition transform hover:scale-110" aria-label="Follow on Instagram">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-instagram"><rect width="20" height="20" x="2" y="2" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" x2="17.5" y1="6.5" y2="6.5"/></svg>
+                </a>
+            </div>
+          </div>
+          <div class="rounded-xl overflow-hidden shadow-xl mt-8">
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3770.977875030669!2d72.88743247494477!3d19.075983052489074!2m3!1f0!0f0!0f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3be7c90dc773b39b%3A0xf4d31eb39dfc5027!2sSaki%20Naka%2C%20Mumbai!5e0!3m2!1sen!2sin!4v1713961794321!5m2!1sen!2sin"
+              width="100%" height="250" style="border:0;" allowfullscreen="" loading="lazy" class="w-full">
+            </iframe>
+          </div>
+          
+          <div class="flex items-start gap-4">
+            <svg xmlns="http://www.w3.org/2000/svg" class="text-primary-blue w-6 h-6 flex-shrink-0 mt-1" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 10c0 6-8 12-8 12s-8-6-8-12a8 8 0 0 1 16 0z"/><circle cx="12" cy="10" r="3"/></svg>
+            <div>
+              <p class="font-medium text-lg">Office Address</p>
+              <p class="text-gray-600">Unit No. 10, Ground Floor, Wajid Ali Compound, Behind Dilshad Hotel, 90 Ft Road, Sakinaka, Mumbai - 400072</p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="bg-primary-blue text-white py-6 text-center">
+    <p class="text-sm opacity-80">© 2025 NexGen Systems | All Rights Reserved. | <span class="font-semibold">Design by SAKI JP INFOTECH</span></p>
   </footer>
 
-  <!-- Scripts -->
-  <script src="https://unpkg.com/aos@2.3.4/dist/aos.js"></script>
-  <script>
-    AOS.init({
-      duration: 1000,
-      once: true
-    });
+  <button id="scroll-to-top" class="fixed bottom-6 right-6 p-3 bg-secondary-teal text-white rounded-full shadow-lg opacity-0 transition-opacity duration-300 hover:bg-secondary-teal/80">
+    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="lucide lucide-arrow-up"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></svg>
+  </button>
 
-    gsap.from("header", {y: -80, opacity: 0, duration: 1});
-  </script>
+  <script src="script.js"></script>
 </body>
 </html>
